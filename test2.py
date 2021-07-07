@@ -1,6 +1,6 @@
 import taichi as ti
 #
-ti.init(arch=ti.gpu)
+ti.init(arch = ti.gpu)
 #
 @ti.kernel
 def my_kernel():

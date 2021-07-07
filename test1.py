@@ -1,13 +1,13 @@
 import taichi as ti
 
-ti.init(arch=ti.gpu)
+ti.init(arch = ti.gpu)
 
 n = 500
-pixels = ti.field(dtype=float, shape=(n * 2, n))
+pixels = ti.field(dtype = float, shape = (n * 2, n))
 
 @ti.func
 def complex_sqr(z):
-    return ti.Vector([z[0]**2 - z[1]**2, z[1] * z[0] * 2])
+    return ti.Vector([z[0] ** 2 - z[1] ** 2, z[1] * z[0] * 2])
 
 @ti.kernel
 def paint(t: float):
