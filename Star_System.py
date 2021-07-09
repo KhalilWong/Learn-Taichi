@@ -25,7 +25,7 @@ class StarSystem():
     def initialize_particles(self):
         for i in range(self.pn):
             print(i)
-            self.x[i] = [0.5, 0.5] + self.random_vector(0.5)
+            self.x[i] = [0.5, 0.5] + self.random_vector(0.3)
             self.v[i] = [0.0, 0.0]
             for j in range(self.sn):
                 offset = -(self.centers[j] - self.x[i])
@@ -49,6 +49,7 @@ class StarSystem():
         gui.circle([0.4, 0.65], radius = 10, color = 0xffaa88)
         gui.circle([0.6, 0.65], radius = 10, color = 0xffaa88)
         gui.circles(self.x.to_numpy(), radius = 3, color = 0xffffff)
+
 ################################################################################
 solar = StarSystem(3, 8, 0.0001)
 solar.centers[0] = [0.5, 0.35]
