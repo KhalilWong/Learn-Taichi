@@ -45,9 +45,9 @@ def main0(A, B, n, d, m, times):
     C = np.dot(A, B)
     end_time = time.perf_counter()
     times[0].append(end_time - start_time)
-    print('Total Time with Numpy dot: %fs.' % (times[0][-1]))
+    #print('Total Time with Numpy dot: %fs.' % (times[0][-1]))
     #print(C[:5, :5])
-    print('*' * 64)
+    #print('*' * 64)
     #
     '''
     C = np.zeros((n, m))
@@ -55,9 +55,9 @@ def main0(A, B, n, d, m, times):
     matmul_CPU(A, B, C)
     end_time = time.perf_counter()
     times[1].append(end_time - start_time)
-    print('Total Time with Numba CPU: %fs.' % (times[1][-1]))
+    #print('Total Time with Numba CPU: %fs.' % (times[1][-1]))
     #print(C[:5, :5])
-    print('*' * 64)
+    #print('*' * 64)
     '''
     #
     C = np.zeros((n, m))
@@ -71,9 +71,9 @@ def main0(A, B, n, d, m, times):
     #d_C.copy_to_host(C)
     C = d_C.copy_to_host()
     times[2].append(end_time - start_time)
-    print('Total Time with Numba CUDA: %fs.' % (times[2][-1]))
+    #print('Total Time with Numba CUDA: %fs.' % (times[2][-1]))
     #print(C[:5, :5])
-    print('*' * 64)
+    #print('*' * 64)
 
 ################################################################################
 def main1(A, B, n, d, m, times):
@@ -89,13 +89,15 @@ def main1(A, B, n, d, m, times):
     A_tc.from_numpy(A)
     B_tc.from_numpy(B)
     C_tc.from_numpy(C)
+    matmul_TaiChi(d)
+    #C_tc.from_numpy(C)
     start_time = time.perf_counter()
     matmul_TaiChi(d)
     end_time = time.perf_counter()
     times[3].append(end_time - start_time)
-    print('Total Time with TaiChi: %fs.' % (times[3][-1]))
+    #print('Total Time with TaiChi: %fs.' % (times[3][-1]))
     #print(C_tc[4, 4])
-    print('*' * 64)
+    #print('*' * 64)
 
 ################################################################################
 if __name__ == '__main__':
@@ -110,10 +112,10 @@ if __name__ == '__main__':
         main1(As[i], Bs[i], nd[i], nd[i], m, times)
     #
     fig, ax = plt.subplots()
-    ax.plot(nd, times[0], 'o-', color = 'b', label='Numpy dot')
-    #ax.plot(nd, times[1], 'o-', color = 'g', label='Numba CPU')
-    ax.plot(nd, times[2], 'o-', color = 'r', label='Numba CUDA')
-    ax.plot(nd, times[3], 'o-', color = 'y', label='Taichi')
+    ax.plot(nd, times[0], 'o-', color = 'b', label = 'Numpy dot: ' + str(round(times[0][-1], 4)))
+    #ax.plot(nd, times[1], 'o-', color = 'g', label = 'Numba CPU: ' + str(round(times[1][-1], 4)))
+    ax.plot(nd, times[2], 'o-', color = 'r', label = 'Numba CUDA: ' + str(round(times[2][-1], 4)))
+    ax.plot(nd, times[3], 'o-', color = 'y', label = 'Taichi: ' + str(round(times[3][-1], 4)))
     ax.set(xlabel = 'n', ylabel = 'time')
     ax.legend(loc = 'best', shadow = True, fontsize = 'x-large')
     ax.grid()
